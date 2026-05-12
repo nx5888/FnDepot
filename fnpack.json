@@ -11,10 +11,10 @@
     "isdocker": "false",
     "bug_report_url": "https://github.com/nx5888/FnDepot/issues",
     "install_type": "存储空间",
-    "size": "3.8",
+    "size": "4.3",
     "home_page": "https://github.com/nx5888/FnDepot",
     "source": "https://github.com/nx5888/FnDepot",
-    "changelog": "Chat2API v1.3.0 FnOS 适配版本。\n- 完整 Web 管理界面（Dashboard/Providers/Proxy/Settings 等）\n- 支持 tauri2.0/v2 平台的 Electron 替代方案\n- 支持 Web-bridge 模式运行\n- 后端 Koa 服务 + 前端 React 单页应用\n- 默认管理密钥：chat2api-fpk-secret-2026\n- 默认端口：8080",
+    "changelog": "Chat2API v1.3.0 FnOS 适配版本。\\n- 完整 Web 管理界面\\n- 支持 FnOS 桌面图标注册\\n- 默认端口 8080\\n- 默认管理密钥：chat2api-fpk-secret-2026",
     "arch_diff": {}
   }
 }
