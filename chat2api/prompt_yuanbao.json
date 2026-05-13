@@ -1,0 +1,9 @@
+{
+  "model": "yuanbao",
+  "messages": [
+    {
+      "role": "user",
+      "content": "一个 React 应用 ErrorBoundary 捕获了这个错误，恢复3次后仍然报错：\n\nNotFoundError: Failed to execute 'insertBefore' on 'Node': The node before which the new node is to be inserted is not a child of this node.\n\n组件栈指向 QuickActions 组件（Dashboard-BVDXeLnV.js:23404），错误发生在 index-D95seZVG.js:11229（React DOM 的 insertBefore 操作）。\n\n这是在 Chat2API Web 管理界面（React SPA）中，Dashboard 页面自动每60秒刷新数据时触发的。已经加了 ErrorBoundary 静默恢复逻辑（重置 hasError + 递增 key 重建子树），但恢复后同一错误再次触发。\n\n问题：\n1. 根因是什么？为什么 key 重建子树后仍然能触发同一错误？\n2. 怎么彻底修复？"
+    }
+  ]
+}

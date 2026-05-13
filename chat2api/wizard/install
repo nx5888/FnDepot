@@ -1,0 +1,27 @@
+[
+    {
+        "stepTitle": "安装 Chat2API",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Chat2API 统一管理多个 AI 服务商，提供统一 API 接口转发\n• API 服务端口：8080\n• 管理界面端口：8081"
+            },
+            {
+                "type": "text",
+                "field": "wizard_app_port",
+                "label": "API 服务端口",
+                "initValue": "8080",
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "请输入端口号"
+                    },
+                    {
+                        "pattern": "^\\d+$",
+                        "message": "端口号必须为数字"
+                    }
+                ]
+            }
+        ]
+    }
+]

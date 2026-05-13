@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+    <link rel="icon" type="image/png" href="./assets/icons-DJH5QOMG.png" />
+    <title>Chat2API</title>
+    <script src="./web-bridge.js"></script>
+    <script type="module" crossorigin src="./assets/index-D95seZVG.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BFGyrMa6.css">
+  </head>
+  <body>
+    <div id="root" translate="no"></div>
+    <div id="portal-root" translate="no"></div>
+  
+<script>
+(function(){
+  var key = "chat2api-post-reload-msg";
+  var msg = localStorage.getItem(key);
+  if (msg) {
+    localStorage.removeItem(key);
+    window.addEventListener("load", function(){
+      setTimeout(function(){
+        var d = document.createElement("div");
+        d.style.cssText = "position:fixed;bottom:1rem;right:1rem;z-index:9999;background:#22c55e;color:#fff;padding:0.75rem 1.5rem;border-radius:0.5rem;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-size:0.875rem;transition:opacity 0.3s;cursor:pointer";
+        d.textContent = msg;
+        d.onclick = function(){ d.remove(); };
+        document.body.appendChild(d);
+        setTimeout(function(){ d.style.opacity="0"; setTimeout(function(){ d.remove(); }, 300); }, 4000);
+      }, 500);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

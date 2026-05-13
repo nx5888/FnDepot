@@ -1,0 +1,22 @@
+{
+  "data-share": {
+    "shares": [
+      {
+        "name": "App.Native.Chat2API",
+        "permission": {
+          "rw": [
+            "App.Native.Chat2API"
+          ]
+        }
+      },
+      {
+        "name": "App.Native.Chat2API/data",
+        "permission": {
+          "rw": [
+            "App.Native.Chat2API"
+          ]
+        }
+      }
+    ]
+  }
+}

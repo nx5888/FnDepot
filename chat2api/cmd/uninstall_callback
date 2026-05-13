@@ -1,0 +1,8 @@
+#!/bin/bash
+# Pre-uninstall: remove mgmt service
+systemctl stop chat2api-mgmt.service 2>/dev/null
+systemctl disable chat2api-mgmt.service 2>/dev/null
+rm -f /etc/systemd/system/chat2api-mgmt.service
+rm -f /usr/local/bin/chat2api-mgmt.js
+systemctl daemon-reload
+exit 0

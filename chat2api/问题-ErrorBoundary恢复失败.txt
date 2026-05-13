@@ -1,0 +1,33 @@
+﻿问题：React ErrorBoundary 静默恢复后仍反复崩溃
+
+## 环境
+- Chat2API Web 管理界面（React SPA，编译后的 JS bundle）
+- Dashboard 页面每 60 秒自动刷新数据
+- 错误：`NotFoundError: Failed to execute 'insertBefore' on 'Node'`
+- 组件栈指向 QuickActions 组件（Dashboard-BVDXeLnV.js:23404）
+- 原始错误位置：index-D95seZVG.js:11229（React 内部）
+
+## 现状
+已在 ErrorBoundary 中实现自动恢复：
+1. 首次崩溃 → 2 秒后 `_recoveryKey++` + `setState({ hasError: false })`，children 外包 `<div key={recoveryKey}>` 强制子树重建
+2. 最多重试 3 次
+3. 3 次全失败 → 当前方案是 `window.location.reload()` 硬刷新
+
+**问题**：即使用了 key 重建子树，恢复后还是会重新崩溃（连续 3 次都失败），说明竞态条件本身没有消除。
+
+## 猜想根因
+Dashboard 每次加载时，`useEffect` 中启动了一个 `setInterval(60s)` 自动刷新。关键细节：
+- 渲染时可能有 Portal（tooltip/notification）追加到 body
+- 60s 间隔触发数据重新获取 → state 更新 → React reconciliation
+- Portal 的 DOM 操作与 reconcile 产生竞争
+- ErrorBoundary 恢复后，新的子树再次触发 `useEffect` → 重新注册 interval → 同一条件再次命中
+
+## 需要你分析
+1. 为什么 key 重建子树后还是立即崩溃？这意味着 DOM 不一致是**恢复后立刻**还是**延迟一段时间后**重现？
+2. 如果是恢复后立刻崩溃 → 说明恢复过程中 React 的 commit 阶段直接触发同一问题（Portal 重新挂载时 insertBefore 又出错）
+3. 如果是延迟后崩溃 → 说明 `useEffect` / `setInterval` 又启动了新的自动刷新周期导致
+
+## 该怎么彻底修？
+- 只在 ErrorBoundary 层面做恢复够吗？还是需要在 Dashboard 层面修改？
+- 有没有办法定位到是哪个组件的什么操作触发 DOM 不一致？
+- 是否有 React 版本的 Bug（代码显示 React 18.x）导致 Portal + interval 的组合会产生 insertBefore 异常？

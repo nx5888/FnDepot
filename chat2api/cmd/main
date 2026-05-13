@@ -1,0 +1,40 @@
+#!/bin/bash
+# Chat2API FnDepot service management
+# ²ÎÊý: start|stop|restart|status
+
+APP_DIR="/usr/local/apps/@appcenter/chat2api/server"
+MGMT_JS="/usr/local/bin/chat2api-mgmt.js"
+PID_FILE="/var/run/chat2api.pid"
+MGMT_PID_FILE="/var/run/chat2api-mgmt.pid"
+LOG_FILE="/var/log/apps/chat2api.log"
+
+case "$1" in
+    start)
+        echo "[FPK] Starting Chat2API server..."
+        cd "$APP_DIR"
+        nohup node server.cjs > "$LOG_FILE" 2>&1 &
+        echo $! > "$PID_FILE"
+        echo "[FPK] Starting management UI (port 8081)..."
+        nohup node "$MGMT_JS" > /dev/null 2>&1 &
+        echo $! > "$MGMT_PID_FILE"
+        ;;
+    stop)
+        echo "[FPK] Stopping..."
+        [ -f "$PID_FILE" ] && kill "$(cat "$PID_FILE")" 2>/dev/null; rm -f "$PID_FILE"
+        [ -f "$MGMT_PID_FILE" ] && kill "$(cat "$MGMT_PID_FILE")" 2>/dev/null; rm -f "$MGMT_PID_FILE"
+        ;;
+    restart)
+        $0 stop; sleep 1; $0 start
+        ;;
+    status)
+        if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+            echo "running"
+        else
+            echo "stopped"
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac

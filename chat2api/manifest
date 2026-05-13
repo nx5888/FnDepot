@@ -1,0 +1,17 @@
+appname               = chat2api
+display_name          = Chat2API
+desc                  = 统一管理多个AI服务商：OpenAI、Claude、Gemini、Qwen等，提供统一API接口转发<br>• API 服务端口：8080<br>• 管理界面端口：8081
+source                = thirdparty
+maintainer            = nx5888
+maintainer_url        = https://github.com/nx5888
+distributor           = nx5888
+distributor_url       = https://github.com/nx5888/FnDepot
+desktop_uidir         = ui
+desktop_applaunchname = chat2api.Application
+icon                  = ICON.PNG
+main                  = cmd/main
+platform              = all
+micro_app             = true
+os_min_version        = 1.0.0
+version               = 1.3.4
+changelog             = • index.html 添加 translate="no" 和 notranslate meta 标签，防止浏览器翻译插件篡改 DOM 导致 React 18 insertBefore 崩溃<br>• 修复 ErrorBoundary 重试逻辑：手动重试改为 window.location.reload()<br>• Dashboard 版本隔离：_refreshVersion 计数器防止陈旧请求污染 store<br>• 添加 Portal 稳定容器 (#portal-root)<br>• 管理 API 503 修复：替换 toReversed() 为 slice().reverse()（Node 18 兼容）

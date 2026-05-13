@@ -1,0 +1,14 @@
+{
+    ".url": {
+        "chat2api.Application": {
+            "title": "Chat2API",
+            "icon": "images/icon-{0}.png",
+            "type": "url",
+            "url": "/chat2api/",
+            "allUsers": true,
+            "control": {
+                "accessPerm": "editable"
+            }
+        }
+    }
+}

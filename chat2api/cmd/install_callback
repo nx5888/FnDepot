@@ -1,0 +1,39 @@
+#!/bin/bash
+# Post-install: create mgmt service, enable PM2 or systemd
+APP_DIR="/usr/local/apps/@appcenter/chat2api"
+MGMT_JS="/usr/local/bin/chat2api-mgmt.js"
+MGMT_SERVICE="/etc/systemd/system/chat2api-mgmt.service"
+
+# Copy mgmt server script if exists
+if [ -f "$APP_DIR/server/chat2api-mgmt.js" ]; then
+    cp "$APP_DIR/server/chat2api-mgmt.js" "$MGMT_JS"
+    chmod +x "$MGMT_JS"
+fi
+
+# Create systemd service for mgmt
+cat > "$MGMT_SERVICE" << 'SERVICEEOF'
+[Unit]
+Description=Chat2API Management UI (port 8081)
+After=network.target chat2api.service
+Wants=chat2api.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /usr/local/bin/chat2api-mgmt.js
+Restart=on-failure
+RestartSec=5
+Environment=MGMT_PORT=8081
+Environment=API_PORT=8080
+Environment=API_KEY=chat2api-fpk-secret-2026
+Environment=STATIC_DIR=/usr/local/apps/@appcenter/chat2api/server/public
+
+[Install]
+WantedBy=multi-user.target
+SERVICEEOF
+
+systemctl daemon-reload
+systemctl enable chat2api-mgmt.service
+systemctl start chat2api-mgmt.service
+
+echo "[FPK] Install complete"
+exit 0
